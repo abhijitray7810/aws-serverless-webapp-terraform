@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serverless App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2em;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .items-list {
+            margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border-left: 4px solid #667eea;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .item-id {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .item-data {
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .item-date {
+            font-size: 0.8em;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+        }
+        
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .success {
+            background: #efe;
+            color: #3c3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Serverless App</h1>
+        <p class="subtitle">Built with AWS Lambda, API Gateway, DynamoDB & CloudFront</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value" id="itemCount">0</div>
+                <div class="stat-label">Items</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">AWS</div>
+                <div class="stat-label">Cloud</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="itemData">New Item Data</label>
+            <input type="text" id="itemData" placeholder="Enter some data..." />
+        </div>
+        
+        <div>
+            <button onclick="addItem()" id="addBtn">Add Item</button>
+            <button onclick="loadItems()" id="refreshBtn">Refresh List</button>
+        </div>
+        
+        <div id="message"></div>
+        
+        <div class="items-list" id="itemsList">
+            <div class="loading">Loading items...</div>
+        </div>
+    </div>
+
+    <script>
+        // API Gateway endpoint - will be replaced by Terraform or manually configured
+        const API_ENDPOINT = '/api/items'; // CloudFront will route /api/* to API Gateway
+        
+        async function loadItems() {
+            const listDiv = document.getElementById('itemsList');
+            const refreshBtn = document.getElementById('refreshBtn');
+            
+            refreshBtn.disabled = true;
+            listDiv.innerHTML = '<div class="loading">Loading items...</div>';
+            
+            try {
+                const response = await fetch(API_ENDPOINT);
+                const data = await response.json();
+                
+                document.getElementById('itemCount').textContent = data.count || 0;
+                
+                if (data.items && data.items.length > 0) {
+                    listDiv.innerHTML = data.items.map(item => `
+                        <div class="item">
+                            <div class="item-id">ID: ${item.id}</div>
+                            <div class="item-data">${escapeHtml(item.data)}</div>
+                            <div class="item-date">${new Date(item.created_at).toLocaleString()}</div>
+                        </div>
+                    `).join('');
+                } else {
+                    listDiv.innerHTML = '<div class="loading">No items yet. Add one above!</div>';
+                }
+            } catch (error) {
+                showMessage('Error loading items: ' + error.message, 'error');
+                listDiv.innerHTML = '<div class="loading">Failed to load items</div>';
+            } finally {
+                refreshBtn.disabled = false;
+            }
+        }
+        
+        async function addItem() {
+            const input = document.getElementById('itemData');
+            const btn = document.getElementById('addBtn');
+            const data = input.value.trim();
+            
+            if (!data) {
+                showMessage('Please enter some data', 'error');
+                return;
+            }
+            
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ data })
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    showMessage('Item added successfully!', 'success');
+                    input.value = '';
+                    loadItems();
+                } else {
+                    throw new Error(result.error || 'Failed to add item');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+        
+        function showMessage(text, type) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.innerHTML = `<div class="${type}">${text}</div>`;
+            setTimeout(() => {
+                msgDiv.innerHTML = '';
+            }, 5000);
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Load items on page load
+        document.addEventListener('DOMContentLoaded', loadItems);
+        
+        // Allow Enter key to submit
+        document.getElementById('itemData').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addItem();
+            }
+        });
+    </script>
+</body>
+</html>
