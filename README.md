@@ -1,6 +1,3 @@
-I'll create a comprehensive README.md file with all deployment steps, troubleshooting, and best practices for your serverless AWS application.
-
-```markdown
 # AWS Serverless Web Application
 
 [![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
