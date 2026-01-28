@@ -2,40 +2,17 @@
 
 [![AWS](https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
 [![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/)
-[![Docker] (https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 
 A complete serverless web application built with AWS services (S3, API Gateway, Lambda, DynamoDB, CloudFront) using Terraform for Infrastructure as Code and Docker for containerized Lambda functions.
 
 ## 🏗️ Architecture
-![image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/c567db466457383f2725c1ceda2bf7601f77d2e5/assets/Screenshot%202026-01-28%20123911.png)
 ```
-┌─────────────┐     ┌──────────────┐     ┌─────────────┐
-│   Client    │────▶│  CloudFront  │────▶│     S3      │
-│  (Browser)  │     │   (CDN)      │     │Static Website│
-└─────────────┘     └──────┬───────┘     └─────────────┘
-                           │
-                    ┌──────┴──────┐
-                    │   /api/*     │
-                    └──────┬──────┘
-                           │
-                    ┌──────▼───────┐
-                    │  API Gateway │
-                    └──────┬───────┘
-                           │
-                    ┌──────▼───────┐
-                    │    Lambda    │
-                    │   (Docker)   │
-                    └──────┬───────┘
-                           │
-                    ┌──────▼───────┐
-                    │   DynamoDB   │
-                    │    Table     │
-                    └──────────────┘
+![image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/c567db466457383f2725c1ceda2bf7601f77d2e5/assets/Screenshot%202026-01-28%20123911.png)
 ```
 
 ## 📋 Prerequisites
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173724.png)
 ### Required Tools
 
 | Tool | Version | Purpose |
@@ -70,7 +47,7 @@ export AWS_DEFAULT_REGION=us-east-1
 ```
 
 ## 🚀 Quick Start
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20172601.png)
 ### 1. Clone Repository
 
 ```bash
@@ -119,7 +96,7 @@ aws-serverless-webapp/
 ```
 
 ## 🔧 Manual Deployment Steps
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20172715.png)
 ### Step 1: Initialize Terraform
 
 ```bash
@@ -214,7 +191,7 @@ aws cloudfront wait invalidation-completed \
 ```
 
 ## 🧪 Local Development
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20172917.png)
 ### Test Lambda Locally
 
 ```bash
@@ -244,7 +221,7 @@ terraform apply -var="environment=local"
 ```
 
 ## 📊 Monitoring & Debugging
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20172952.png)
 ### View CloudWatch Logs
 
 ```bash
@@ -275,7 +252,7 @@ curl -v https://$CF_URL/api/items
 ```
 
 ### Common Issues
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173104.png)
 #### 1. CloudFront 403/404 Errors
 
 **Cause:** CloudFront not routing `/api/*` to API Gateway  
@@ -325,7 +302,7 @@ aws iam get-role-policy \
 ```
 
 ## 🔐 Security Best Practices
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173133.png)
 ### 1. Enable Remote State (Production)
 
 ```hcl
@@ -391,7 +368,7 @@ resource "aws_api_gateway_authorizer" "cognito" {
 4. **Use S3 Intelligent-Tiering** for infrequently accessed data
 
 ## 🧹 Cleanup
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173222.png)
 ### Destroy Infrastructure
 
 ```bash
@@ -408,7 +385,7 @@ aws ecr batch-delete-image \
   --repository-name $PROJECT_NAME-$ENVIRONMENT-lambda \
   --image-ids imageTag=latest
 ```
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173206.png)
 ### Remove Local Files
 
 ```bash
@@ -418,7 +395,7 @@ rm -rf terraform/.terraform terraform/terraform.tfstate*
 # Remove Docker images
 docker rmi $(docker images -q $PROJECT_NAME-lambda) --force
 ```
-
+![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173509.png)
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -463,5 +440,3 @@ This README includes:
 8. **Cost estimates and optimization tips**
 9. **Cleanup instructions**
 10. **Contributing guidelines**
-
-The troubleshooting section covers the specific error you encountered with CloudFront routing and Lambda integration issues. You can customize the repository URL, add a LICENSE file, and adjust the cost estimates based on your region and usage patterns.
