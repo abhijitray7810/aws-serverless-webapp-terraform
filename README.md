@@ -71,7 +71,7 @@ chmod +x deploy.sh
 
 ## 📁 Project Structure
 
-```
+``` 
 aws-serverless-webapp/
 ├── 📁 terraform/                 # Infrastructure as Code
 │   ├── 📄 main.tf               # Main Terraform configuration
