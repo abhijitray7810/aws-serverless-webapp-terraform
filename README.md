@@ -23,7 +23,7 @@ A complete serverless web application built with AWS services (S3, API Gateway, 
 
 ### AWS Requirements
 
-- AWS Account with programmatic access
+- AWS Account with programmatic access 
 - IAM User/Role with permissions:
   - `AmazonS3FullAccess`
   - `AmazonDynamoDBFullAccess`
