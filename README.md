@@ -33,7 +33,7 @@ A complete serverless web application built with AWS services (S3, API Gateway, 
   - `AmazonEC2ContainerRegistryFullAccess`
   - `IAMFullAccess`
 
-### Configure AWS Credentials
+### Configure AWS Credentials 
 
 ```bash
 # Configure AWS CLI
