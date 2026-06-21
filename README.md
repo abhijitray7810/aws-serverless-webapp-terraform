@@ -6,7 +6,7 @@
 
 A complete serverless web application built with AWS services (S3, API Gateway, Lambda, DynamoDB, CloudFront) using Terraform for Infrastructure as Code and Docker for containerized Lambda functions.
  
-## 🏗️ Architecture 
+## 🏗️ Architecture  
  
 ![image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/c567db466457383f2725c1ceda2bf7601f77d2e5/assets/Screenshot%202026-01-28%20123911.png)
 
