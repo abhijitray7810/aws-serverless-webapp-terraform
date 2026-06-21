@@ -10,7 +10,7 @@ A complete serverless web application built with AWS services (S3, API Gateway, 
 
 ![image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/c567db466457383f2725c1ceda2bf7601f77d2e5/assets/Screenshot%202026-01-28%20123911.png)
 
-## 📋 Prerequisites
+## 📋 Prerequisites 
 ![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173724.png)
 ### Required Tools
 
