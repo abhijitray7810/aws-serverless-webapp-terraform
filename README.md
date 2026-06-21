@@ -14,7 +14,7 @@ A complete serverless web application built with AWS services (S3, API Gateway, 
 ![Image](https://github.com/abhijitray7810/aws-serverless-webapp-terraform/blob/9e5de63e4d1fba899b15402063a94bf71d7c15b1/assets/Screenshot%202026-01-26%20173724.png)
 ### Required Tools
 
-| Tool | Version | Purpose |
+| Tool | Version | Purpose | 
 |------|---------|---------|
 | [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) | v2.x | AWS resource mana gement |
 | [Terraform](https://www.terraform.io/downloads.html) | >= 1.0 | Infrastructure as Code |
