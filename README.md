@@ -18,7 +18,7 @@ A complete serverless web application built with AWS services (S3, API Gateway, 
 |------|---------|---------|
 | [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html) | v2.x | AWS resource mana gement |
 | [Terraform](https://www.terraform.io/downloads.html) | >= 1.0 | Infrastructure as Code |
-| [Docker](https://docs.docker.com/get-docker/) | >= 20.10 | Containerization |
+| [Docker](https://docs.docker.com/get-docker/) | >= 20.10 | Containerization | 
 | [Git](https://git-scm.com/downloads) | >= 2.30 | Version control |
 
 ### AWS Requirements
