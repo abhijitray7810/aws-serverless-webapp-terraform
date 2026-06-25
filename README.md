@@ -4,7 +4,7 @@
 [![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)](https://www.terraform.io/) 
 [![Python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 
-A complete serverless web application built with AWS services (S3, API Gateway, Lambda, DynamoDB, CloudFront) using Terraform for Infrastructure as Code and Docker for containerized Lambda functions. 
+A complete serverless web application built with AWS services (S3, API Gateway, Lambda, DynamoDB, CloudFront) using Terraf orm for Infrastructure as Code and Docker for containerized Lambda functions. 
    
 ## 🏗️ Architecture   
   
